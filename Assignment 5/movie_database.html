@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Movie Database</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+	<style>
+		.movieDiv {
+			height: 450px;
+		}
+		.posterDiv {
+			height: 300px;
+			margin-top: 40px;
+			position: relative;
+		}
+		img {
+			height: 300px;
+			width: 200px;
+		}
+		.mask {
+			background-color: rgba(0, 0, 0, 0.8);
+			color: white;
+			position: absolute;
+			height: 300px;
+			width: 200px;
+			visibility: hidden;
+			text-align: center;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		.posterDiv:hover .mask {
+			visibility: visible;
+		}
+		.mask h3 {
+			margin-top: 15px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<h1 class="col-12 mt-3 justify-content-center text-center">Movie Database</h1>
+		</div>
+
+		<div class="row">
+			<form id="searchForm" class="col-12">
+				<div class="form-row justify-content-center">
+					<div class="col-8 col-md-4 col-lg-4 mt-3">
+						<input type="text" name="search" id="searchBar" class="form-control" placeholder="Search...">
+					</div>
+					<div class="col-4 col-md-2 col-lg-2 mt-3">
+						<button type="submit" class="btn btn-primary btn-block">Search</button>
+					</div>
+				</div>
+				<div class="form-row justify-content-center mt-3">
+					Showing&nbsp;<strong><div id="shownMovies">20</div></strong>&nbsp;out of&nbsp;<strong><div id="movieResults">1121</div></strong>&nbsp;movie(s).
+				</div>
+		</div>
+		<div class="row" id="movies">
+			
+		</div>
+	</div>
+
+	<script>
+		
+		function movieCallback(returnObject) {
+			var results = returnObject.results;
+
+			document.querySelector("#shownMovies").innerHTML = returnObject.results.length;
+			document.querySelector("#movieResults").innerHTML = returnObject.total_results;
+
+			// Remove any movie divs already in place
+			var currentMovies = document.querySelector("#movies");
+			while(currentMovies.hasChildNodes()) {
+				currentMovies.removeChild(currentMovies.lastChild);
+			}
+
+			for(var i = 0; i < results.length; ++i) {
+				// Setting up the poster
+				var movie = document.createElement("div");
+				movie.classList.add("col-12", "col-md-4", "col-lg-3", "movieDiv");
+
+				var poster = document.createElement("div");
+				poster.classList.add("row", "justify-content-center", "posterDiv");
+
+				var posterImg = document.createElement("img");
+				posterImg.src = "https://image.tmdb.org/t/p/w500" + results[i].poster_path;
+
+				var mask = document.createElement("div");
+				mask.classList.add("mask");
+
+				var rating = document.createElement("h3");
+				rating.innerHTML = "Rating: " + results[i].vote_average;
+
+				var overview = document.createElement("p");
+				var temp = results[i].overview;
+				if(temp.length > 200) {
+					temp = temp.substring(0, 197) + "...";
+				}
+				overview.innerHTML = temp;
+
+				// Setting up the name and release date
+				var textComponent = document.createElement("div");
+				textComponent.classList.add("row", "text-center");
+
+				var titleDiv = document.createElement("div");
+				titleDiv.classList.add("col-12", "mt-3");
+
+				var title = document.createElement("h5");
+				title.innerHTML = results[i].title;
+
+				var dateDiv = document.createElement("div");
+				dateDiv.classList.add("col-12");
+
+				var date = document.createElement("p");
+				date.innerHTML = results[i].release_date;
+
+				// Add everything to the appropriate div
+				titleDiv.appendChild(title);
+				dateDiv.appendChild(date);
+
+				textComponent.appendChild(titleDiv);
+				textComponent.appendChild(dateDiv);
+
+				mask.appendChild(rating);
+				mask.appendChild(overview);
+
+				poster.appendChild(posterImg);
+				poster.appendChild(mask);
+
+				movie.appendChild(poster);
+				movie.appendChild(textComponent);
+
+				document.querySelector("#movies").appendChild(movie);
+			}
+		}
+
+		document.querySelector("#searchForm").onsubmit = function() {
+			var search = document.querySelector("#searchBar").value.trim();
+			var url = "https://api.themoviedb.org/3/search/movie?api_key=ec6945e93120b42e2980338109e22661&callback=movieCallback&query=" + search;
+			var script = document.createElement("script");
+			script.src = url;
+			script.id = "dbScript";
+			document.body.removeChild(document.querySelector("#dbScript"));
+			document.body.appendChild(script);
+			console.log(script.src);
+			return false;
+		}
+	</script>
+	<script src="https://api.themoviedb.org/3/movie/now_playing?api_key=ec6945e93120b42e2980338109e22661&callback=movieCallback" id="dbScript"></script>
+</body>
+</html>

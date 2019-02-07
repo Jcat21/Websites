@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JS Calculator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+	<style>
+		#display {
+			font-size: 2em;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<h1 class="col-12 text-center mt-5">JS Calculator</h1>
+		</div> <!-- .row -->
+		<div class="row">
+			<div id="calculator" class="mt-4 col-12 col-md-6 ml-md-auto mr-md-auto col-lg-4">
+				<div class="row">
+					<input type="text" id="display" class="col-12 text-right form-control" value="OFF" disabled>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-6 btn btn-lg btn-outline-dark" id="activate">ON / OFF</button>
+					<button class="col-6 btn btn-lg btn-outline-dark" id="clear">AC</button>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-3 btn btn-lg btn-outline-dark num">7</button>
+					<button class="col-3 btn btn-lg btn-outline-dark num">8</button>
+					<button class="col-3 btn btn-lg btn-outline-dark num">9</button>
+					<button class="col-3 btn btn-lg btn-outline-dark operation" id="division">/</button>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-3 btn btn-lg btn-outline-dark num">4</button>
+					<button class="col-3 btn btn-lg btn-outline-dark num">5</button>
+					<button class="col-3 btn btn-lg btn-outline-dark num">6</button>
+					<button class="col-3 btn btn-lg btn-outline-dark operation" id="multiplication">x</button>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-3 btn btn-lg btn-outline-dark num">1</button>
+					<button class="col-3 btn btn-lg btn-outline-dark num">2</button>
+					<button class="col-3 btn btn-lg btn-outline-dark num">3</button>
+					<button class="col-3 btn btn-lg btn-outline-dark operation" id="subtraction">-</button>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-3 btn btn-lg btn-outline-dark num">0</button>
+					<button class="col-3 btn btn-lg btn-outline-dark" id="dot">.</button>
+					<button class="col-3 btn btn-lg btn-outline-dark operation" id="equals">=</button>
+					<button class="col-3 btn btn-lg btn-outline-dark operation" id="addition">+</button>
+				</div> <!-- .row -->
+			</div> <!-- #calculator -->
+		</div> <!-- .row -->
+	</div> <!-- .container -->
+
+	<script>
+		var isOn = false;
+		var isDirty = false;
+		var isNumPressed = false;
+		var currentValue = 0.0;
+		var operation = "";
+
+		function switchOnOperation(value) {
+			switch(operation) {
+				case "addition":
+					return value + parseFloat(document.getElementById("display").value);
+				case "subtraction":
+					return value - parseFloat(document.getElementById("display").value);
+				case "multiplication":
+					return value * parseFloat(document.getElementById("display").value);
+				case "division":
+					return value / parseFloat(document.getElementById("display").value);
+				case "equals":
+					return value;
+				case "":
+					return parseFloat(document.getElementById("display").value);
+				default:
+					console.log("operation error");
+					return 0.0;
+			}
+		}
+
+		function togglePower() {
+			isOn = !isOn;
+			if(isOn) {
+				document.getElementById("display").value = "0";
+			}
+			else {
+				document.getElementById("display").value = "OFF";
+				currentValue = 0;
+				operation = "";
+				isDirty = false;
+				isNumPressed = false;
+			}
+		}
+
+		function resetCalculator() {
+			if(isOn) {
+				document.getElementById("display").value = "0";
+				currentValue = 0;
+				operation = "";
+				isDirty = false;
+				isNumPressed = false;
+			}
+		}
+
+		document.getElementById("activate").onclick = function() {
+			togglePower();
+		}
+
+		let el = document.querySelector( ':focus' );
+		document.onkeydown = function(event) {
+			if(event.key === " ") {
+				el = document.querySelector( ':focus' );
+				if( el ) {
+					el.blur();
+				}
+			}
+		}
+
+		document.onkeyup = function(event) {
+			if(event.key === " ") {
+				if(el) {
+					el.click();
+				}
+				togglePower();
+			}
+		}
+
+		document.getElementById("clear").onclick = function() {
+			resetCalculator();
+		}
+
+		document.getElementById("dot").onclick = function() {
+			if(isOn && !isDirty) {
+				isDirty = true;
+				document.getElementById("display").value = "0.";
+			}
+			else if(isOn && !(document.getElementById("display").value.indexOf('.') > -1)) {
+				document.getElementById("display").value += ".";
+			}
+			isNumPressed = true;
+		}
+
+		var numbers = document.querySelectorAll(".num");
+		for(var i = 0; i < numbers.length; ++i) {
+			numbers[i].onclick = function() {
+				if(isOn) {
+					if(!isDirty) {
+						document.getElementById("display").value = this.innerHTML;
+						isDirty = true;
+						isNumPressed = true;
+					}
+					else if(document.getElementById("display").value.indexOf('.') > -1) {
+						document.getElementById("display").value += this.innerHTML;
+					}
+					else if(parseFloat(document.getElementById("display").value) === 0) {
+						document.getElementById("display").value = this.innerHTML;
+					}
+					else {
+						document.getElementById("display").value += this.innerHTML;
+					}
+				}
+			}
+		}
+
+		var operations = document.querySelectorAll(".operation");
+		for(var i = 0; i < operations.length; ++i) {
+			operations[i].onclick = function() {
+				if(isOn) {
+					if(this.id === "equals") {
+						currentValue = switchOnOperation(currentValue);
+						operation = "";
+						document.getElementById("display").value = currentValue.toString();
+						isDirty = false;
+					}
+					else {
+						if(isNumPressed) {
+							currentValue = switchOnOperation(currentValue);
+						}
+						operation = this.id;
+						isDirty = false;
+						isNumPressed = false;
+					}
+				}
+			}
+		}
+
+	</script>
+</body>
+</html>

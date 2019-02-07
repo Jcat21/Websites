@@ -1,0 +1,21 @@
+ul {
+	padding: 0;
+}
+
+#weatherContainer {
+	border: 1px solid black;
+}
+#toDoContainer {
+	border: 1px solid black;
+	margin-left: auto;
+	margin-right: auto;
+}
+#temperature {
+	display: inline;
+}
+#sky {
+	display: inline;
+}
+#feels {
+	display: inline;
+}

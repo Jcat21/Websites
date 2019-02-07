@@ -1,0 +1,124 @@
+/* Style Sheet */
+
+/* Get rid of default whitespaces */
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: black;
+}
+
+.header {
+	background-image: url("Annihilation_Cover.jpg");
+	height: 600px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+.header h1 {
+	color: white;
+	margin-top: 0;
+	text-align: center;
+	padding-top: 450px;
+	font-size: 50px;
+	/*background-color: orange;*/
+}
+
+.main_div {
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 15px;
+	background-color: #606060;
+}
+
+.content img {
+	min-width: 225px;
+	width: 32.5%;
+	height: 250px;
+	margin: 15px;
+}
+
+.content .content-center-img {
+	width: 100%;
+	height: 350px;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 0;
+}
+
+.sidebar {
+	margin-top: 2%;
+	border: 2px solid black;
+	background-color: #202020;
+}
+
+.sidebar img {
+	background-color: #202020;
+	border: none;
+}
+
+.actor_piece:hover .mask{
+	visibility: visible;
+}
+
+.actor_piece img {
+	width: 100%;
+	display: block;
+	max-height: 200px;
+	min-height: 200px;
+	
+	min-width: 100px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+.actor_piece .mask {
+	background-color: rgba(64, 64, 64, 0.85);
+	text-align: center;
+	visibility: hidden;
+	
+	position: absolute;
+	top: 5%;
+	left: 0px;
+	width: 100%;
+	height: 90%;
+}
+.actor_piece .mask h3 {
+	padding-top: 30%;
+	color: white;
+}
+
+.footer {
+	background-color: gray;
+	text-align: center;
+	margin-top: 0px;
+	color: black;
+	padding: 10px;
+	display: block;
+}
+
+@media(max-width: 400px) {
+	.main_div {
+		padding-left: 4px;
+		padding-right: 4px;
+	}
+	.content img {
+		width: 100%;
+		height: 250px;
+		margin: 1px;
+		float: none;
+	}
+	.content .content-center-img {
+		width: 100%;
+		height: 350px;
+		display: block;
+		margin-right: auto;
+		margin-left: auto;
+		margin-bottom: 10px;
+		float: none;
+	}
+}

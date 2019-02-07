@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>To Do List</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row col-12 col-md-10 col-lg-7" id="weatherContainer">
+			<div class="col-12 mt-1 mb-1 text-center">
+				Today's weather in Los Angeles:&nbsp;<div id="temperature">20</div>°&nbsp;<div id="sky">1121</div>.&nbsp;Feels like&nbsp;<div id="feels">1121</div>°
+			</div>
+		</div>
+		<div class="col-12 col-md-10 col-lg-7 mt-5" id="toDoContainer">
+			<div class="row mt-3" id="listDiv">
+				<div class="col-9 text-center"><h1>To Do List</h1></div>
+				<div class="col-3"><button id="toggleAdd"><span class="fas fa-plus"></span></button></div>
+				
+				<form id="listInput" class="col-12">
+					<div class="form-row justify-content-center">
+						<div class="col-10">
+							<input type="text" name="search" id="inputBar" class="form-control" placeholder="Add to-do item here">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="row mt-3 justify-content-center" id="itemsDiv">
+				<ul class="list-group-flush col-12">
+					<li class="list-group-item"><button class="checkbox"><span class="far fa-square"></span></button>Clean Room</li>
+					<li class="list-group-item"><button class="checkbox"><span class="far fa-square"></span></button>Do Homework</li>
+					<li class="list-group-item"><button class="checkbox"><span class="far fa-square"></span></button>Cry</li>
+				</ul>
+			</div>
+		</div>
+		
+	</div>
+
+	<script src="functions.js"></script>
+</body>
+</html>

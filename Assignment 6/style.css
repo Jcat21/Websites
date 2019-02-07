@@ -1,0 +1,72 @@
+body {
+	background-color: #FFF3B3;
+}
+.container {
+	padding: 0;
+}
+
+#weatherContainer {
+	background-color: lightblue;
+	color: white;
+	margin-left: auto;
+	margin-right: auto;
+}
+#toDoContainer {
+	margin-left: auto;
+	margin-right: auto;
+	font-family: 'Permanent Marker', cursive;
+}
+#temperature {
+	display: inline;
+}
+#sky {
+	display: inline;
+}
+#feels {
+	display: inline;
+}
+
+#listDiv button {
+	margin-top: 0.6em;
+	border-style: hidden;
+	outline: none;
+	width: 2em;
+	height: 2em;
+	background-color: #FFF3B3;
+}
+
+#itemsDiv {
+	box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+}
+.list-group-item {
+	background-color: white;
+}
+.list-group-item:hover {
+	background-color: rgba(0,0,0,0.1);
+}
+.list-group-flush {
+	padding: 0;
+}
+
+li button {
+    margin-right: 1em;
+	border-style: hidden;
+	outline: none;
+	font: inherit;
+	color: inherit;
+	background-color: white;
+}
+
+.done {
+	color: grey;
+	text-decoration: line-through;
+	font-style: italic;
+}
+.done:hover {
+	text-decoration: line-through;
+}

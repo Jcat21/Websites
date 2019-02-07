@@ -1,0 +1,4 @@
+SELECT * FROM `albums` WHERE title LIKE '%on%' ORDER BY title;
+SELECT title, name FROM `albums` INNER JOIN artists ON albums.artist_id=artists.artist_id WHERE title LIKE '%on%' ORDER BY title;
+SELECT tracks.name AS track_name, composer, media_types.name AS media_type, unit_price FROM `tracks` INNER JOIN media_types ON tracks.media_type_id=media_types.media_type_id WHERE media_types.name LIKE 'AAC audio file';
+SELECT track_id, tracks.name AS track_name, composer, milliseconds, genres.name AS genre_name FROM `tracks` INNER JOIN genres ON tracks.genre_id=genres.genre_id WHERE (genres.name LIKE 'R&B/Soul' OR genres.name LIKE 'Jazz') AND composer IS NOT NULL ORDER BY tracks.name desc;
